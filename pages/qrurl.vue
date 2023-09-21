@@ -4,29 +4,78 @@
       <div class="url-shortener">
         <h1>Hee Yai Mak</h1>
         <div class="input-container">
-          <input type="text" v-model="originalUrl" placeholder="Enter your URL" />
-          <button @click="shortenUrl">Shorten</button>
+          <input 
+          id="urlInput"
+          v-model="url"
+          type="url"
+          placeholder="https://example.com"
+           />
+          <button @click="generateQRCode">QR Generate</button>
         </div>
-        <div v-if="shortenedUrl" class="result">
-          <p>Your shortened URL:</p>
-          <a :href="shortenedUrl" target="_blank">{{ shortenedUrl }}</a>
+        <div v-if="qrCodeValue" class="result">
+          <p>Generate Now !</p>
+          <qrcode-vue :value="qrCodeValue" :size="size" level="H" />
         </div>
       </div>
     </div>
   </template>
   
-  <script setup>
-  import { ref } from "vue";
+  <script>
+  import QrcodeVue from 'qrcode.vue';
+  import axios from 'axios';
+
+  export default {
+    data() {
+      return {
+        url: '',
+        size: 300,
+        qrCodeValue: '', // Initial value for QR code
+      };
+    },
+    components: {
+      QrcodeVue,
+    },
+    methods: {
+      generateQRCode() {
+        // Validate if the input is a valid URL
+        if (!this.isValidURL(this.url)) {
+          alert('Please enter a valid URL');
+          return;
+        }
   
-  const originalUrl = ref("");
-  const shortenedUrl = ref("");
-  
-  const shortenUrl = () => {
-    // Implement your URL shortening logic here
-    // Once shortened, set the shortenedUrl ref with the result
-    // Example: shortenedUrl.value = "http://short.url/abc123";
+        // Update the QR code value with the input URL
+        this.qrCodeValue = this.url;
+
+        this.sendQRCodeToBackend();
+        
+      },
+      isValidURL(inputURL) {
+        // A basic URL validation using regular expression
+        const urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+        return urlPattern.test(inputURL);
+      },
+sendQRCodeToBackend() {
+  // Ensure that this.qrCodeValue is defined before sending it to the backend
+
+  const data = {
+    full_url: this.qrCodeValue, 
+    qr_image: this.qrCodeValue,
   };
+
+  axios
+    .post('http://localhost:3002/qrurl', data)
+    .then((response) => {
+      console.log('QR code sent to the backend:', response.data);
+    })
+    .catch((error) => {
+      console.error('Error sending QR code:', error);
+    });
+},
+
+  },
+};
   </script>
+  
   
   <style scoped>
 

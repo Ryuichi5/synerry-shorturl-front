@@ -1,35 +1,61 @@
 <template>
-     <navbar></navbar>
-    <div class="login-container">
-      <div class="login-box">
-        <h1>Login</h1>
-        <form @submit.prevent="login">
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" v-model="username" required />
-          </div>
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" v-model="password" required />
-          </div>
-          <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <router-link to="/register">Register</router-link></p>
-      </div>
+  <navbar></navbar>
+  <div class="login-container">
+    <div class="login-box">
+      <h1>Login</h1>
+      <form @submit.prevent="login">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="name" v-model="name" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" v-model="password" required />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <router-link to="/register">Register</router-link></p>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref } from "vue";
-  
-  const username = ref("");
-  const password = ref("");
-  
-  const login = () => {
-    // Implement your login logic here
-    // Example: Check credentials and navigate to the dashboard
-  };
-  </script>
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import axios from "axios"; // Import axios for making HTTP requests
+
+const name = ref("");
+const password = ref("");
+
+const login = async () => {
+  try {
+    // Send a POST request to your backend API to authenticate
+    const response = await axios.post("http://localhost:3003/users/login", {
+      name: name.value,
+      password: password.value,
+    });
+
+    // Assuming the server returns a token
+    const token = response.data.token;
+
+    console.log("Login Success" , token);
+
+    // Store the token in localStorage
+    localStorage.setItem("token", token);
+
+    // Redirect to the dashboard or another page upon successful login
+    // Example: router.push("/dashboard");
+  } catch (error) {
+    alert("เกิดข้อผิดพลาด ไม่มีชื่อผู้ใช้")
+    // Handle login errors here, e.g., display an error message
+    console.error("Login failed:", error);
+  }
+};
+</script>
+
+<style scoped>
+/* Your CSS styles */
+</style>
+
   
   <style scoped>
 

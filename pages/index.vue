@@ -21,7 +21,6 @@ import { generateRandomString, isValidHttpUrl } from "../helpers/helper-function
 import axios from 'axios';
 
 const full_url = ref('');
-
 const shortenedUrl = ref("");
 
 // const shortenUrl = () => { 
