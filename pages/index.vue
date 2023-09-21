@@ -4,7 +4,7 @@
       <div class="url-shortener">
         <h1>Shorten your URL</h1>
         <div class="input-container">
-          <input type="text" v-model="originalUrl" placeholder="Enter your URL" />
+          <input v-model="full_url" type="text" placeholder="Enter a URL" />
           <button @click="shortenUrl">Shorten</button>
         </div>
         <div v-if="shortenedUrl" class="result">
@@ -18,17 +18,38 @@
   <script setup>
 import { ref } from "vue";
 import { generateRandomString, isValidHttpUrl } from "../helpers/helper-functions";
+import axios from 'axios';
 
-const originalUrl = ref("");
+const full_url = ref('');
+
 const shortenedUrl = ref("");
 
-const shortenUrl = () => { 
-  if (isValidHttpUrl(originalUrl.value)) {
-    const uniqueID = generateRandomString();
+// const shortenUrl = () => { 
+//   if (isValidHttpUrl(originalUrl.value)) {
+//     const uniqueID = generateRandomString();
+//     const shortUrl = `http://127.0.0.1:3000/${uniqueID}`;
+//     shortenedUrl.value = shortUrl;
+//   } else {
+//     alert("Invalid URL. Please enter a valid HTTP/HTTPS URL.");
+//   }
+// };
+
+const shortenUrl = async () => {
+  try {
+
+    if (isValidHttpUrl(full_url.value)) {
+      const requestData = { full_url: full_url.value.toString() };
+    const response = await axios.post('http://localhost:3001/shorturl', requestData);
+    console.log("shortenedUrl",response.data.short_url);
+    const uniqueID = response.data.short_url
     const shortUrl = `http://127.0.0.1:3000/${uniqueID}`;
     shortenedUrl.value = shortUrl;
   } else {
     alert("Invalid URL. Please enter a valid HTTP/HTTPS URL.");
+  }
+
+  } catch (error) {
+    console.error('Error creating short URL:', error);
   }
 };
   </script>
