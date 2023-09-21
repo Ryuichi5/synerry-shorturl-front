@@ -16,16 +16,21 @@
   </template>
   
   <script setup>
-  import { ref } from "vue";
-  
-  const originalUrl = ref("");
-  const shortenedUrl = ref("");
-  
-  const shortenUrl = () => {
-    // Implement your URL shortening logic here
-    // Once shortened, set the shortenedUrl ref with the result
-    // Example: shortenedUrl.value = "http://short.url/abc123";
-  };
+import { ref } from "vue";
+import { generateRandomString, isValidHttpUrl } from "../helpers/helper-functions";
+
+const originalUrl = ref("");
+const shortenedUrl = ref("");
+
+const shortenUrl = () => { 
+  if (isValidHttpUrl(originalUrl.value)) {
+    const uniqueID = generateRandomString();
+    const shortUrl = `http://127.0.0.1:3000/${uniqueID}`;
+    shortenedUrl.value = shortUrl;
+  } else {
+    alert("Invalid URL. Please enter a valid HTTP/HTTPS URL.");
+  }
+};
   </script>
   
   <style scoped>
