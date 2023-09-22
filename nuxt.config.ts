@@ -2,4 +2,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   components: true,
+  runtimeConfig: {
+    public: {
+      DATABASE_HOST: process.env.DATABASE_HOST
+    },
+     },
 })

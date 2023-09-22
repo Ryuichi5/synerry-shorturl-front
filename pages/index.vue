@@ -26,6 +26,9 @@ import axios from 'axios';
 const full_url = ref('');
 const shortenedUrl = ref("");
 
+const process = useRuntimeConfig();
+    // console.log("test" , process.public.DATABASE_HOST+":3003/users/profile");
+
 // const shortenUrl = () => { 
 //   if (isValidHttpUrl(originalUrl.value)) {
 //     const uniqueID = generateRandomString();
@@ -43,7 +46,7 @@ const shortenUrl = async () => {
     console.log("tokenResponse", token);
 
     // Fetch the user's short URL history by user_id
-    const response = await axios.get(`http://45.144.164.74:3003/users/profile`, {
+    const response = await axios.get(process.public.DATABASE_HOST+":3003/users/profile", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -61,10 +64,10 @@ const shortenUrl = async () => {
         full_url: full_url.value.toString() ,
         user_id : user_id
       };
-    const response = await axios.post('http://45.144.164.74:3001/shorturl', requestData);
+    const response = await axios.post(process.public.DATABASE_HOST+':3001/shorturl', requestData);
     console.log("shortenedUrl",response.data.short_url);
     const uniqueID = response.data.short_url
-    const shortUrl = `http://45.144.164.74:4000/${uniqueID}`;
+    const shortUrl = process.public.DATABASE_HOST+`:4000/${uniqueID}`;
     shortenedUrl.value = shortUrl;
   } else {
     alert("Invalid URL. Please enter a valid HTTP/HTTPS URL.");

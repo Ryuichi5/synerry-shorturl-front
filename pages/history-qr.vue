@@ -43,7 +43,7 @@
 import { ref, onMounted } from 'vue';
 import QrcodeVue from 'qrcode.vue';
  import axios from 'axios';
-
+ const process = useRuntimeConfig();
 const shortUrlHistory = ref([]);
 const itemsPerPage = 3; // Number of items per page
 let currentPage = ref(1);
@@ -67,7 +67,7 @@ onMounted(async () => {
     console.log("tokenResponse", token);
 
     // Fetch the user's short URL history by user_id
-    const response = await axios.get(`http://45.144.164.74:3003/users/profile`, {
+    const response = await axios.get(process.public.DATABASE_HOST+`:3003/users/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -77,7 +77,7 @@ onMounted(async () => {
     const user_id = response.data.data.profile.id;
 
     // // Fetch the user's short URL history by user_id
-    const qrurl = await axios.get(`http://45.144.164.74:3002/qrurl/users/${user_id}`,);
+    const qrurl = await axios.get(process.public.DATABASE_HOST+`:3002/qrurl/users/${user_id}`,);
     console.log("qrurl",qrurl);
     shortUrlHistory.value = qrurl.data; // Assuming the API returns an array of history data
   } catch (error) {

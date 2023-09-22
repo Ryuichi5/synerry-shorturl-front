@@ -25,14 +25,15 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios"; // Import axios for making HTTP requests
-
+const process = useRuntimeConfig();
 const name = ref("");
 const password = ref("");
 
 const login = async () => {
   try {
+
     // Send a POST request to your backend API to authenticate
-    const response = await axios.post("http://45.144.164.74:3003/users/login", {
+    const response = await axios.post(process.public.DATABASE_HOST+":3003/users/login", {
       name: name.value,
       password: password.value,
     });
