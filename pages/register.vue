@@ -30,7 +30,7 @@ const password = ref("");
 const register = async () => {
   try {
     // Send a POST request to your backend API to authenticate
-    const response = await axios.post("http://localhost:3003/users", {
+    const response = await axios.post("http://45.144.164.74:3003/users", {
       name: name.value,
       password: password.value,
     });

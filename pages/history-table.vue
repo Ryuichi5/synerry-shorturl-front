@@ -21,7 +21,7 @@
           <tr v-for="(entry, index) in paginatedShortUrlHistory" :key="index">
             <td>{{ entry.id }}</td>
             <td>{{ entry.full_url }}</td>
-            <td><a :href=entry.short_url>http://127.0.0.1:3000/{{ entry.short_url }}</a></td>
+            <td><a :href=entry.short_url>45.144.164.74/{{ entry.short_url }}</a></td>
             <td>{{ entry.create_at }}</td>
           </tr>
         </tbody>
@@ -62,7 +62,7 @@ onMounted(async () => {
     console.log("tokenResponse", token);
 
     // Fetch the user's short URL history by user_id
-    const response = await axios.get(`http://localhost:3003/users/profile`, {
+    const response = await axios.get(`http://45.144.164.74:3003/users/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -72,7 +72,7 @@ onMounted(async () => {
     const user_id = response.data.data.profile.id;
 
     // // Fetch the user's short URL history by user_id
-    const shorturl = await axios.get(`http://localhost:3001/shorturl/users/${user_id}`,);
+    const shorturl = await axios.get(`http://45.144.164.74:3001/shorturl/users/${user_id}`,);
     shortUrlHistory.value = shorturl.data; // Assuming the API returns an array of history data
   } catch (error) {
     console.error('Error fetching short URL history:', error);

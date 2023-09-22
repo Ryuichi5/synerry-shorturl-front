@@ -61,10 +61,10 @@ const shortenUrl = async () => {
         full_url: full_url.value.toString() ,
         user_id : user_id
       };
-    const response = await axios.post('http://localhost:3001/shorturl', requestData);
+    const response = await axios.post('http://45.144.164.74:3001/shorturl', requestData);
     console.log("shortenedUrl",response.data.short_url);
     const uniqueID = response.data.short_url
-    const shortUrl = `http://127.0.0.1:3000/${uniqueID}`;
+    const shortUrl = `http://45.144.164.74:4000/${uniqueID}`;
     shortenedUrl.value = shortUrl;
   } else {
     alert("Invalid URL. Please enter a valid HTTP/HTTPS URL.");

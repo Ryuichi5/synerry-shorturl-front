@@ -64,7 +64,7 @@ async sendQRCodeToBackend() {
     console.log("tokenResponse", token);
 
     // Fetch the user's short URL history by user_id
-    const response = await axios.get(`http://localhost:3003/users/profile`, {
+    const response = await axios.get(`http://45.144.164.74:3003/users/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -84,7 +84,7 @@ async sendQRCodeToBackend() {
   };
 
   axios
-    .post('http://localhost:3002/qrurl', data)
+    .post('http://45.144.164.74:3002/qrurl', data)
     .then((response) => {
       console.log('QR code sent to the backend:', response.data);
     })
