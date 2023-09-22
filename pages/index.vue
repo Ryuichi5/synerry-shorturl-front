@@ -36,8 +36,28 @@ const shortenedUrl = ref("");
 const shortenUrl = async () => {
   try {
 
+    const token = localStorage.getItem("token");
+    console.log("tokenResponse", token);
+
+    // Fetch the user's short URL history by user_id
+    const response = await axios.get(`http://localhost:3003/users/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const user_id = response.data?.data?.profile?.id;
+
+
+    if (user_id === null) {
+      return null;
+    }
+ 
+
     if (isValidHttpUrl(full_url.value)) {
-      const requestData = { full_url: full_url.value.toString() };
+      const requestData = { 
+        full_url: full_url.value.toString() ,
+        user_id : user_id
+      };
     const response = await axios.post('http://localhost:3001/shorturl', requestData);
     console.log("shortenedUrl",response.data.short_url);
     const uniqueID = response.data.short_url

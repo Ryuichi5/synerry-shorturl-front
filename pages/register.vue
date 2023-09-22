@@ -6,15 +6,11 @@
         <form @submit.prevent="register">
           <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" id="username" v-model="username" required />
+            <input type="text" id="username" v-model="name" required />
           </div>
           <div class="form-group">
             <label for="password">Password:</label>
             <input type="password" id="password" v-model="password" required />
-          </div>
-          <div class="form-group">
-            <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" v-model="confirmPassword" required />
           </div>
           <button type="submit">Register</button>
         </form>
@@ -23,16 +19,35 @@
   </template>
   
   <script setup>
-  import { ref } from "vue";
+import { ref } from "vue";
+import axios from "axios"; // Import axios for making HTTP requests
+
+const name = ref("");
+const password = ref("");
   
-  const username = ref("");
-  const password = ref("");
-  const confirmPassword = ref("");
-  
-  const register = () => {
-    // Implement your registration logic here
-    // Example: Check if passwords match and create a new user
-  };
+const register = async () => {
+  try {
+    // Send a POST request to your backend API to authenticate
+    const response = await axios.post("http://localhost:3003/users", {
+      name: name.value,
+      password: password.value,
+    });
+
+    // Assuming the server returns a token
+    const token = response.data.token;
+
+    console.log("Login Success" , token);
+
+    window.location = "/login";
+
+    // Redirect to the dashboard or another page upon successful login
+    // Example: router.push("/dashboard");
+  } catch (error) {
+    alert("เกิดข้อผิดพลาด")
+    // Handle login errors here, e.g., display an error message
+    console.error("Login failed:", error);
+  }
+};
   </script>
   
   <style scoped>

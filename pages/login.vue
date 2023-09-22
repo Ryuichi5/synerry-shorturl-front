@@ -34,13 +34,14 @@ const login = async () => {
       password: password.value,
     });
 
+    console.log("from login",response);
     // Assuming the server returns a token
     const token = response.data.token;
 
-    console.log("Login Success" , token);
-
     // Store the token in localStorage
     localStorage.setItem("token", token);
+
+    window.location = "/";
 
     // Redirect to the dashboard or another page upon successful login
     // Example: router.push("/dashboard");

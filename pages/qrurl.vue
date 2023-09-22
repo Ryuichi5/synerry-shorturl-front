@@ -54,12 +54,29 @@
         const urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
         return urlPattern.test(inputURL);
       },
-sendQRCodeToBackend() {
+async sendQRCodeToBackend() {
   // Ensure that this.qrCodeValue is defined before sending it to the backend
+  const token = localStorage.getItem("token");
+    console.log("tokenResponse", token);
+
+    // Fetch the user's short URL history by user_id
+    const response = await axios.get(`http://localhost:3003/users/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const user_id = response.data?.data?.profile?.id;
+
+
+    if (user_id === null) {
+      return null;
+    }
+ 
 
   const data = {
     full_url: this.qrCodeValue, 
     qr_image: this.qrCodeValue,
+    user_id: user_id
   };
 
   axios

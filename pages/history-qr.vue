@@ -19,9 +19,10 @@
             <tr v-for="(entry, index) in shortUrlHistory" :key="index">
               <td>{{ entry.id }}</td>
               <td>{{ entry.full_url }}</td>
-              <td><a :href=entry.short_url>http://127.0.0.1:3000/{{ entry.short_url }}</a></td>
+              <!-- <td>{{ entry.qr_image }}</td> -->
+              <td><qrcode-vue :value="entry.qr_image" :size="size" level="H" /></td>
               <td>{{ entry.create_at }}</td>
-              
+
             </tr>
           </tbody>
         </table>
@@ -32,14 +33,18 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import QrcodeVue from 'qrcode.vue';
+ import axios from 'axios';
 
 const shortUrlHistory = ref([]);
 
+
 // Fetch the token first
 onMounted(async () => {
-  try {
+  
 
+
+  try {
     const token = localStorage.getItem("token");
     console.log("tokenResponse", token);
 
@@ -54,8 +59,9 @@ onMounted(async () => {
     const user_id = response.data.data.profile.id;
 
     // // Fetch the user's short URL history by user_id
-    const shorturl = await axios.get(`http://localhost:3001/shorturl/users/${user_id}`,);
-    shortUrlHistory.value = shorturl.data; // Assuming the API returns an array of history data
+    const qrurl = await axios.get(`http://localhost:3002/qrurl/users/${user_id}`,);
+    console.log("qrurl",qrurl);
+    shortUrlHistory.value = qrurl.data; // Assuming the API returns an array of history data
   } catch (error) {
     console.error('Error fetching short URL history:', error);
   }
