@@ -67,7 +67,7 @@ onMounted(async () => {
     console.log("tokenResponse", token);
 
     // Fetch the user's short URL history by user_id
-    const response = await axios.get(`http://localhost:3003/users/profile`, {
+    const response = await axios.get(`http://45.144.164.74:3003/users/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -77,7 +77,7 @@ onMounted(async () => {
     const user_id = response.data.data.profile.id;
 
     // // Fetch the user's short URL history by user_id
-    const qrurl = await axios.get(`http://localhost:3002/qrurl/users/${user_id}`,);
+    const qrurl = await axios.get(`http://45.144.164.74:3002/qrurl/users/${user_id}`,);
     console.log("qrurl",qrurl);
     shortUrlHistory.value = qrurl.data; // Assuming the API returns an array of history data
   } catch (error) {

@@ -24,7 +24,7 @@
   // Create a function to fetch the original URL
   async function fetchOriginalUrl(randomString) {
     try {
-      const response = await axios.get(`http://localhost:3001/shorturl/${randomString}`);
+      const response = await axios.get(`http://45.144.164.74:3001/shorturl/${randomString}`);
       return {
         status: response.status,
         data: response.data,

@@ -43,7 +43,7 @@ const shortenUrl = async () => {
     console.log("tokenResponse", token);
 
     // Fetch the user's short URL history by user_id
-    const response = await axios.get(`http://localhost:3003/users/profile`, {
+    const response = await axios.get(`http://45.144.164.74:3003/users/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
