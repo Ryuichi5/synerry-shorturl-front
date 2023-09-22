@@ -1,5 +1,6 @@
 <template>
-  <navbar></navbar>
+  <body>
+    <navbar></navbar>
   <div class="login-container">
     <div class="login-box">
       <h1>Login</h1>
@@ -17,6 +18,8 @@
       <p>Don't have an account? <router-link to="/register">Register</router-link></p>
     </div>
   </div>
+  </body>
+
 </template>
 
 <script setup>
@@ -54,7 +57,11 @@ const login = async () => {
 </script>
 
 <style scoped>
-/* Your CSS styles */
+body{
+  background-color: #0093E9;
+background-image: linear-gradient(45deg, #0093E9 0%, #80D0C7 100%);
+
+}
 </style>
 
   

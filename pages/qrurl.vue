@@ -1,8 +1,11 @@
 <template>
-     <navbar></navbar>
+  
+
+    <body>
+      <navbar></navbar>
     <div class="url-shortener-container">
       <div class="url-shortener">
-        <h1>Hee Yai Mak</h1>
+        <h1>QR Generate</h1>
         <div class="input-container">
           <input 
           id="urlInput"
@@ -10,7 +13,7 @@
           type="url"
           placeholder="https://example.com"
            />
-          <button @click="generateQRCode">QR Generate</button>
+          <button @click="generateQRCode">Generate</button>
         </div>
         <div v-if="qrCodeValue" class="result">
           <p>Generate Now !</p>
@@ -18,6 +21,7 @@
         </div>
       </div>
     </div>
+    </body>
   </template>
   
   <script>
@@ -95,7 +99,11 @@ async sendQRCodeToBackend() {
   
   
   <style scoped>
+body{
+  background-color: #0093E9;
+background-image: linear-gradient(45deg, #0093E9 0%, #80D0C7 100%);
 
+}
 .url-shortener-container {
   display: flex;
   justify-content: center;

@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar">
       <div class="logo">
-        <router-link to="/">Your Logo</router-link>
+        <h1>ShortFast</h1>
       </div>
       <ul class="nav-links">
         <li><router-link to="/">Home</router-link></li>
@@ -9,7 +9,7 @@
         <li v-if="isAuthenticated"><router-link to="/history-table">My Short</router-link></li>
         <li v-if="isAuthenticated"><router-link to="/history-qr">My QR</router-link></li>
         <li v-if="!isAuthenticated"><router-link to="/login">Login</router-link></li>
-        <li v-if="isAuthenticated"><button @click="logout">Logout</button></li>
+        <li v-if="isAuthenticated"><a @click="logout">Logout</a></li>
       </ul>
     </nav>
   </template>
@@ -36,16 +36,18 @@ const logout = () => {
   
   <style scoped>
   .navbar {
+    font-size: 17px;
+    height: 35px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #007BFF;
+    background-color: #f8f8f800;
     color: #fff;
     padding: 10px 20px;
   }
   
   .logo {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
   }
   

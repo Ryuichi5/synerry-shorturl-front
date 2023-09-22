@@ -1,4 +1,5 @@
 <template>
+  <body>
     <navbar></navbar>
     <div class="url-shortener-container">
       <div class="url-shortener">
@@ -13,6 +14,8 @@
         </div>
       </div>
     </div>
+  </body>
+  
   </template>
   
   <script setup>
@@ -75,6 +78,11 @@ const shortenUrl = async () => {
   
   <style scoped>
 
+body{
+  background-color: #0093E9;
+background-image: linear-gradient(45deg, #0093E9 0%, #80D0C7 100%);
+
+}
 .url-shortener-container {
   display: flex;
   justify-content: center;
@@ -85,6 +93,7 @@ const shortenUrl = async () => {
 .url-shortener {
   text-align: center;
   padding: 20px;
+  /* background: linear-gradient(45deg, #ff5733, #33ff57, #5733ff); */
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

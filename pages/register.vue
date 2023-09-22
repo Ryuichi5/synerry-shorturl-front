@@ -1,4 +1,5 @@
 <template>
+  <body>
         <navbar></navbar>
     <div class="register-container">
       <div class="register-box">
@@ -16,6 +17,7 @@
         </form>
       </div>
     </div>
+  </body>
   </template>
   
   <script setup>
@@ -51,7 +53,15 @@ const register = async () => {
   </script>
   
   <style scoped>
+
+body{
+  background-color: #0093E9;
+background-image: linear-gradient(45deg, #0093E9 0%, #80D0C7 100%);
+
+}
+
   .register-container {
+    
     display: flex;
     justify-content: center;
     align-items: center;

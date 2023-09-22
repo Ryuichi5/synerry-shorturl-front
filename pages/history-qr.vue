@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <body>
+    <div>
     <navbar></navbar>
     <div class="url-shortener-container">
       <div class="url-shortener">
@@ -16,7 +17,7 @@
           </thead>
           <tbody>
             <!-- Loop through the short URL history and populate the table -->
-            <tr v-for="(entry, index) in shortUrlHistory" :key="index">
+            <tr v-for="(entry, index) in paginatedShortUrlHistory" :key="index">
               <td>{{ entry.id }}</td>
               <td>{{ entry.full_url }}</td>
               <!-- <td>{{ entry.qr_image }}</td> -->
@@ -26,9 +27,16 @@
             </tr>
           </tbody>
         </table>
+                <!-- Pagination buttons -->
+  <div class="pagination">
+    <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
+    <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+  </div>
       </div>
     </div>
   </div>
+  </body>
+  
 </template>
 
 <script setup>
@@ -37,6 +45,16 @@ import QrcodeVue from 'qrcode.vue';
  import axios from 'axios';
 
 const shortUrlHistory = ref([]);
+const itemsPerPage = 3; // Number of items per page
+let currentPage = ref(1);
+
+const paginatedShortUrlHistory = computed(() => {
+  const startIndex = (currentPage.value - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  return shortUrlHistory.value.slice(startIndex, endIndex);
+});
+
+const totalPages = computed(() => Math.ceil(shortUrlHistory.value.length / itemsPerPage));
 
 
 // Fetch the token first
@@ -66,9 +84,29 @@ onMounted(async () => {
     console.error('Error fetching short URL history:', error);
   }
 });
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+  }
+};
+
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
 </script>
 
 <style scoped>
+.pagination{
+  margin-top: 20px;
+}
+body{
+  background-color: #0093E9;
+background-image: linear-gradient(45deg, #0093E9 0%, #80D0C7 100%);
+
+}
 /* Your CSS styles for the table */
 table {
   width: 100%;
@@ -141,6 +179,8 @@ th {
   }
   
   button {
+    
+    margin-left: 10px;
     padding: 10px 20px;
     background-color: #007BFF;
     color: #fff;
